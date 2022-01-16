@@ -1,14 +1,12 @@
 import random
-import console
 
+import console
 from cell import Cell
 
 
 class Board:
     def __init__(self, rows, columns):
-        """
-        ????????? ???? ????????
-        """
+
         self._rows = rows
         self._columns = columns
         self._grid = [[Cell() for column_cells in range(self._columns)] for row_cells in range(self._rows)]
@@ -20,32 +18,26 @@ class Board:
         for row in self._grid:
             for column in row:
                 print(column.print_me(), end='')
-            # ???????? ????????? ???
             print()
 
     def _generate_board(self):
-        '''
-        ?????????? ?????? ??? ?????? ????
-        '''
+        """
+        генерация изначального положения клеток
+        """
 
         for row in self._grid:
-            for column in row:
-                # 75% ?? ??, ????? ?????? ???? ?????
-                chance_number = random.randint(0, 3)
-                if chance_number in [0, 1, 2]:
-                    column.set_alive()
+            for cell in row:
+                # 33.3% шанс стать живой
+                chance_number = random.randint(0, 2)
+                if chance_number == 0:
+                    cell.set_alive()
 
     def check_neighbour(self, check_row, check_column):
-        """
-        ???????? ?? ??????? ????? ? ??????? ???? ??????? ?? ?????
-        """
 
         neighbour_list = []
 
-        # ??????? ??????? ?? ???? ?????? ????/?????
-        # ?? ????? ?????? ????/??????
         for row in range(-1, 2):
-            for column in range(1, 2):
+            for column in range(-1, 2):
                 neighbour_row = check_row + row
                 neighbour_column = check_column + column
 
@@ -86,12 +78,12 @@ class Board:
 
                 if main_cell_is_alive:
                     if len(living_neighbours_count) < 2 or len(living_neighbours_count) > 3:
-                        # ?????
+                        # убиваем
                         to_be_killed.append(cell_object)
                     else:
                         to_be_alive.append(cell_object)
                 else:
-                    # ???????
+                    # оживляем
                     if len(living_neighbours_count) == 3:
                         to_be_alive.append(cell_object)
 

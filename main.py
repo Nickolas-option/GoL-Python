@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from console import clear_console, resize_console
 from board import Board
+from console import clear_console, resize_console
 
 
 def main():
